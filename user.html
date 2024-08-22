@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+ <html>
+ <head>
+   <title>GITAM LMS</title>
+   <style>
+     body {
+       font-family: sans-serif;
+       margin: 0;
+       padding: 0;
+       background-color: #f2f2f2;
+     }
+ 
+     header {
+       background-color: #4CAF50;
+       color: #fff;
+       padding: 10px 20px;
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+     }
+ 
+     .logo {
+       display: flex;
+       align-items: center;
+     }
+ 
+     .logo img {
+       height: 40px;
+       margin-right: 10px;
+     }
+ 
+     .nav {
+       display: flex;
+       list-style: none;
+       margin: 0;
+       padding: 0;
+     }
+ 
+     .nav li {
+       margin-right: 20px;
+     }
+ 
+     .nav a {
+       color: #fff;
+       text-decoration: none;
+     }
+ 
+     .container {
+       display: flex;
+       margin: 20px;
+     }
+ 
+     .sidebar {
+       width: 250px;
+       background-color: #fff;
+       padding: 20px;
+       border-radius: 5px;
+     }
+ 
+     .sidebar h3 {
+       margin-top: 0;
+     }
+ 
+     .sidebar ul {
+       list-style: none;
+       margin: 0;
+       padding: 0;
+     }
+ 
+     .sidebar li {
+       margin-bottom: 10px;
+     }
+ 
+     .content {
+       flex: 1;
+       padding: 20px;
+       background-color: #fff;
+       border-radius: 5px;
+       margin-left: 20px;
+     }
+ 
+     .content h1 {
+       margin-top: 0;
+       font-size: 24px;
+       font-weight: bold;
+       margin-bottom: 10px;
+     }
+ 
+     .content p {
+       margin-bottom: 20px;
+     }
+ 
+     .timeline {
+       background-color: #f9f9f9;
+       padding: 20px;
+       border-radius: 5px;
+       margin-bottom: 20px;
+     }
+ 
+     .timeline h2 {
+       margin-top: 0;
+       font-size: 18px;
+       font-weight: bold;
+       margin-bottom: 10px;
+     }
+ 
+     .timeline .search {
+       margin-bottom: 10px;
+     }
+ 
+     .timeline .search input {
+       width: 100%;
+       padding: 10px;
+       border: 1px solid #ccc;
+       border-radius: 5px;
+     }
+ 
+     .timeline .no-activity {
+       text-align: center;
+     }
+ 
+     .timeline .no-activity i {
+       font-size: 3em;
+       color: #ccc;
+     }
+ 
+     .recently-accessed {
+       background-color: #f9f9f9;
+       padding: 20px;
+       border-radius: 5px;
+     }
+ 
+     .recently-accessed h2 {
+       margin-top: 0;
+       font-size: 18px;
+       font-weight: bold;
+       margin-bottom: 10px;
+     }
+ 
+     .recently-accessed .courses {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+     }
+ 
+     .recently-accessed .courses .course {
+       width: 48%;
+       background-color: #fff;
+       padding: 20px;
+       border-radius: 5px;
+       margin-bottom: 10px;
+     }
+ 
+     .recently-accessed .courses .course h3 {
+       margin-top: 0;
+       font-size: 16px;
+       font-weight: bold;
+       margin-bottom: 10px;
+     }
+ 
+     .recently-accessed .courses .course p {
+       margin-bottom: 0;
+     }
+ 
+     .pagination {
+       display: flex;
+       justify-content: center;
+       align-items: center;
+     }
+ 
+     .pagination button {
+       background-color: #ccc;
+       padding: 10px;
+       border: none;
+       border-radius: 5px;
+       margin: 0 5px;
+       cursor: pointer;
+     }
+ 
+     .pagination button:hover {
+       background-color: #aaa;
+     }
+   </style>
+ </head>
+ <body>
+   <header>
+     <div class="logo">
+       
+       <h1>GITAM</h1>
+       <p>(Deemed to be University)</p>
+       <p>NAAC A++ Accredited</p>
+     </div>
+     <nav class="nav">
+       <li><a href="#">Home</a></li>
+       <li><a href="#">Dashboard</a></li>
+     </nav>
+   </header>
+ 
+   <div class="container">
+     <div class="sidebar">
+       <h3>Private Files</h3>
+       <p>No files available</p>
+       <button>Manage private files...</button>
+ 
+       <h3>Latest Badges</h3>
+       <p>You have no badges to display</p>
+ 
+       <h3>Upcoming Events</h3>
+       <p>There are no upcoming events</p>
+       <button>Go to calendar...</button>
+     </div>
+ 
+     <div class="content">
+       <h1>Welcome back, USER 👋</h1>
+ 
+       <div class="timeline">
+         <h2>Timeline</h2>
+         <div class="search">
+           <input type="text" placeholder="Search by activity type or name">
+         </div>
+         <div class="no-activity">
+           <i class="fas fa-list-ul"></i>
+           <p>No activities require action</p>
+         </div>
+       </div>
+ 
+       <div class="recently-accessed">
+         <h2>Courses</h2>
+         <div class="courses">
+           <div class="course">
+             <h3>HR ROUND TRAINING</h3>
+             <button onclick="window.location.href='hrround.html'"><img src="https://tse3.mm.bing.net/th?id=OIP.MsR4Z42VHSTUfsu9HFIBxQHaH0&pid=Api&P=0&h=180" alt="Course image"></button>
+           </div>
+           <div class="course">
+             <h3>CODING ROUND TRAINING</h3>
+         
+             <!-- <a href="search.html"><img src="https://tse4.mm.bing.net/th?id=OIP.55AwI5dlZzc9TMOOJd7b1AHaIQ&pid=Api&P=0&h=180" alt="Course image"></a> -->
+             <a href="codinground.html"><img src="https://tse4.mm.bing.net/th?id=OIP.55AwI5dlZzc9TMOOJd7b1AHaIQ&pid=Api&P=0&h=180" alt="Course image"></a>
+           </div>
+           <div class="course"> 
+             <h3>APTITUDE ROUND TRAINING</h3>
+             
+            <a href="aptitude.html"> <img src="https://tse1.mm.bing.net/th?id=OIP.g8Oc78MAdfYyQ76sUPqgFAHaFV&pid=Api&P=0&h=180" alt="Course image"></a>
+           </div>
+           <div class="course">
+             <h3>VIEW ANALYSIS</h3>
+             
+            <a href="analysis.html"> <img src="https://tse1.mm.bing.net/th?id=OIP.86Rssa5-4ZRtH3JBJGsiSgHaG-&pid=Api&P=0&h=180" alt="Course image"></a>
+           </div>
+         </div>
+ 
+       </div>
+     </div>
+   </div>
+ 
+  
+ </body>
+ </html>  
