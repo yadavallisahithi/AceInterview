@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+<title>Hr ROUND</title>
+
+  <style>
+  *,*:after,*:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    margin: 0;
+    background: linear-gradient(to right bottom, #3fe270, #036a3f);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .voice_to_text {
+    width: 600px;
+    text-align: center;
+  }
+  h1 {
+    color: #fff;
+    font-size: 50px;
+  }
+  h3 {
+    color: #fff;
+    
+  }
+  #convert_text {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    resize: none;
+    padding: 10px;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  button {
+    padding: 12px 20px;
+    background: #0ea4da;
+    border: 0;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+  }
+
+</style>
+</head>
+<body>
+    <h3 class="question" id="question-title"></h3>
+    <p id="question-prompt" style="display:none;"></p>
+    <script>
+      const questions = [
+        {
+          title: "Imagine you're leading a team project, and one team member consistently fails to meet deadlines. How would you address this issue?",
+          expectedKeywords:  ["Effective communication", "communication", "conflict", "resolution", "active", "listening", "empathy", "collaboration", "professionalism", "problem-solving", "diplomacy", "constructive", "feedback", "teamwork"]
+        },
+        {
+          title: "Can you provide an example of a time when you successfully resolved a conflict within a team? What approach did you take?",
+          expectedKeywords:   ["Accountability", "delegation", "setting", "expectations", "coaching", "performance", "management", "time", "management", "prioritization", "motivation", "team", "building", "conflict", "resolution"]
+
+        },
+        {
+          title: "Describe a situation where you had to make a difficult decision under pressure. How did you approach it?",
+          expectedKeywords: ["Mediation", "negotiation", "compromise", "understanding", "perspectives", "emotional", "intelligence", "respectful", "communication", "finding", "common", "ground", "problem-solving", "skills", "conflict", "management", "techniques", "resolution", "strategies"]},
+        {
+          title: "How would you promote diversity and inclusion in the workplace?",
+          expectedKeywords: ["Diversity", "and", "Inclusion", "equity", "respect", "inclusivity", "awareness", "cultural", "competence", "unconscious", "bias", "fairness", "accessibility", "diversity", "initiatives", "creating", "an", "inclusive", "environment"]
+        },
+        {
+          title: "Describe a situation where you had to deal with a difficult coworker. How did you handle it?",
+          expectedKeywords: ["Critical", "thinking", "analytical", "skills", "problem-solving", "risk", "assessment", "data-driven", "decisions", "consideration", "of", "alternatives", "evaluating", "consequences", "adaptability", "confidence", "accountability"]
+        },
+        {
+          title: "Tell me about yourself?",
+          expectedKeywords: ["communication", "teamwork", "problem-solving", "professionalism"]
+        }
+        // Add more questions as needed
+      ];
+
+      let currentQuestion = {};
+
+      function fetchRandomQuestion() {
+        const randomIndex = Math.floor(Math.random() * questions.length);
+        return questions[randomIndex];
+      }
+
+      document.addEventListener('DOMContentLoaded', (event) => {
+        currentQuestion = fetchRandomQuestion();
+        document.getElementById('question').innerText = currentQuestion.title;
+      });
+
+</script>
+
+  <div class="voice_to_text"> 
+    <h1 id="question">Tell me about yourself ?</h1>
+    <h3>Start when you are ready!!</h3>
+    <textarea id="convert_text"></textarea>
+    <button id="click_to_record">Voice To Text</button>
+    <button id="submit" style="display:none;">Submit Answer</button>
+    <button id="record_again" style="display:none;">Record Again</button>
+    <div id="timer"></div>
+  </div>
+
+  <script>
+    let recognition;
+    let speech = false;
+    let points = 0;
+    let timer;
+    let timeLeft = 30;
+
+    const keywords = [
+      ["communication", "teamwork", "problem-solving", "professionalism"],
+      ["leadership", "accountability", "motivation", "conflict resolution"],
+      ["empathy", "mediation", "negotiation", "diversity and inclusion"]
+    ];
+
+    document.getElementById('click_to_record').addEventListener('click', function() {
+      document.getElementById('click_to_record').style.display = 'none';
+      document.getElementById('submit').style.display = 'inline';
+      document.getElementById('timer').style.display = 'block';
+      startRecognition();
+      startTimer();
+    });
+
+    document.getElementById('submit').addEventListener('click', function() {
+      clearInterval(timer);
+      submitAnswer();
+    });
+
+    document.getElementById('record_again').addEventListener('click', function() {
+      document.getElementById('record_again').style.display = 'none';
+      document.getElementById('click_to_record').style.display = 'inline';
+      document.getElementById("convert_text").value = '';
+      document.getElementById('timer').innerText = '';
+      fetchQuestion();
+    });
+
+    async function submitAnswer() {
+      speech = false;
+      recognition.stop();
+      document.getElementById('submit').style.display = 'none';
+      document.getElementById('record_again').style.display = 'inline';
+      const userAnswer = document.getElementById("convert_text").value;
+      const grade = calculateGrade(userAnswer, currentQuestion.expectedKeywords);
+      alert(`Grade: ${grade}`);
+    }
+
+    function calculateGrade(answer, expectedKeywords) {
+      let totalKeywords = 0;
+      expectedKeywords.forEach(keyword => {
+        if (answer.toLowerCase().includes(keyword)) {
+          totalKeywords++;
+        }
+      });
+      return totalKeywords;
+    }
+
+    function startRecognition() {
+      window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.interimResults = true;
+
+      recognition.addEventListener('result', e => {
+        const transcript = Array.from(e.results)
+          .map(result => result[0])
+          .map(result => result.transcript)
+          .join('');
+
+        document.getElementById("convert_text").value = transcript;
+        console.log(transcript);
+     
+    });
+
+recognition.addEventListener('end', () => {
+  if (speech) {
+    recognition.start();
+  }
+});
+
+speech = true;
+recognition.start();
+}
+
+function startTimer() {
+timeLeft = 30;
+timer = setInterval(() => {
+  document.getElementById('timer').innerText = `Time left: ${timeLeft} seconds`;
+  if (timeLeft <= 0) {
+    clearInterval(timer);
+    submitAnswer();
+  }
+  timeLeft -= 1;
+}, 1000);
+}
+
+async function fetchQuestion() {
+currentQuestion = fetchRandomQuestion();
+document.getElementById('question').innerText = currentQuestion.title;
+}
+
+fetchQuestion();
+</script>
+</body>
+</html>
