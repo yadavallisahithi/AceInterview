@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptitude Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: green;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .question-container {
+            background-color: #000000;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+        .question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .options button {
+            background-color: #ffffff;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .options button.correct {
+            background-color: #4caf50;
+        }
+        .options button.incorrect {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="question-container">
+        <div id="question" class="question">Loading question...</div>
+        <div id="options" class="options"></div>
+    </div>
+
+    <script>
+        const questions = [
+    {
+        question: "In a certain code language, 'MOTHER' is written as 'TQHTLC'. How is 'FATHER' written in that code?",
+        options: ["BQDSHL", "DQHLTB", "HTQCLF", "DTQHLF"],
+        correctAnswer: 3
+    },
+    {
+        question: "A train running at 60 km/hr crosses a pole in 9 seconds. What is the length of the train?",
+        options: ["120 meters", "150 meters", "180 meters", "200 meters"],
+        correctAnswer: 2
+    },
+    {
+        question: "A man buys 3 type of tickets A, B, and C in the ratio 2:3:4. If he buys a total of 54 tickets, how many tickets of type B does he buy?",
+        options: ["12", "18", "24", "30"],
+        correctAnswer: 1
+    },
+    {
+        question: "What is the compound interest on Rs. 10,000 for 2 years at 5% per annum, compounded annually?",
+        options: ["Rs. 1050", "Rs. 1102.50", "Rs. 1125", "Rs. 1150"],
+        correctAnswer: 1
+    },
+    {
+        question: "A can do a piece of work in 20 days and B in 30 days. They work together for 6 days. Then A leaves and B continues. How long will B take to finish the work?",
+        options: ["10 days", "12 days", "15 days", "16 days"],
+        correctAnswer: 1
+    },
+    {
+        question: "The average age of a group of 10 students is 20 years. If 2 more students join the group, the average age increases by 1 year. What is the average age of the two new students?",
+        options: ["21 years", "22 years", "23 years", "24 years"],
+        correctAnswer: 3
+    },
+    {
+        question: "Two pipes A and B can fill a tank in 15 hours and 20 hours respectively. Both are opened together, but after 4 hours, A is turned off. How much time will B take to fill the remaining part of the tank?",
+        options: ["7 hours", "8 hours", "9 hours", "10 hours"],
+        correctAnswer: 0
+    },
+    {
+        question: "If 1/3 of a number is 15, what is 40% of that number?",
+        options: ["16", "18", "20", "24"],
+        correctAnswer: 2
+    },
+    {
+        question: "What is the smallest number that when increased by 5 is divisible by 24, 32, and 36?",
+        options: ["288", "276", "292", "287"],
+        correctAnswer: 0
+    },
+    {
+        question: "A bag contains 6 black balls and 8 white balls. Two balls are drawn at random. What is the probability that both balls are white?",
+        options: ["15/56", "5/28", "3/14", "1/7"],
+        correctAnswer: 1
+    },
+    {
+        question: "A man travels 35 km partly at 4 km/hr and partly at 5 km/hr. If he covers the first 20 km at 4 km/hr, what is the speed for the remaining distance?",
+        options: ["3 km/hr", "4 km/hr", "5 km/hr", "6 km/hr"],
+        correctAnswer: 2
+    },
+    {
+        question: "If the angles of a triangle are in the ratio 2:3:4, what is the measure of the largest angle?",
+        options: ["80°", "90°", "100°", "120°"],
+        correctAnswer: 1
+    },
+    {
+        question: "A car covers a certain distance in 210 minutes by traveling at 60 km/hr. What is the distance traveled?",
+        options: ["210 km", "180 km", "150 km", "120 km"],
+        correctAnswer: 2
+    },
+    {
+        question: "The sum of the ages of 5 children born at intervals of 3 years each is 50 years. What is the age of the youngest child?",
+        options: ["4 years", "6 years", "8 years", "10 years"],
+        correctAnswer: 0
+    },
+    {
+        question: "If 20 men can build a wall 56 meters long in 6 days, what length of a similar wall can be built by 35 men in 3 days?",
+        options: ["49 meters", "60 meters", "63 meters", "70 meters"],
+        correctAnswer: 2
+    },
+    {
+        question: "A 240 meter long train crosses a platform in 24 seconds while it crosses a signal pole in 18 seconds. What is the length of the platform?",
+        options: ["150 meters", "160 meters", "180 meters", "200 meters"],
+        correctAnswer: 1
+    },
+    {
+        question: "A person borrowed Rs. 5000 at 4% per annum simple interest and cleared the debt after 4 years. How much amount did he pay?",
+        options: ["Rs. 5800", "Rs. 6000", "Rs. 6200", "Rs. 6400"],
+        correctAnswer: 1
+    },
+    {
+        question: "Find the missing number in the series: 2, 7, 14, 23, __, 47",
+        options: ["31", "33", "35", "37"],
+        correctAnswer: 3
+    },
+    {
+        question: "A bag contains coins of 25 paise, 50 paise, and 1 rupee in the ratio 1:2:3. If the total value is Rs. 120, find the number of 1 rupee coins.",
+        options: ["60", "80", "100", "120"],
+        correctAnswer: 2
+    },
+    {
+        question: "If a shopkeeper sells an item at Rs. 240, after giving a discount of 20%, what was the marked price?",
+        options: ["Rs. 280", "Rs. 300", "Rs. 320", "Rs. 360"],
+        correctAnswer: 1
+    }
+];
+
+        function getRandomQuestion() {
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            return questions[randomIndex];
+        }
+
+        function displayQuestion(question) {
+            document.getElementById('question').innerText = question.question;
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.innerText = option;
+                button.onclick = () => handleAnswer(index, question.correctAnswer);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function handleAnswer(selectedIndex, correctIndex) {
+            const buttons = document.querySelectorAll('.options button');
+            buttons.forEach((button, index) => {
+                if (index === correctIndex) {
+                    button.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    button.classList.add('incorrect');
+                }
+                button.disabled = true;
+            });
+        }
+
+        window.onload = () => {
+            const question = getRandomQuestion();
+            displayQuestion(question);
+        };
+    </script>
+</body>
+</html>
