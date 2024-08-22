@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coding Problems</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://lh6.googleusercontent.com/proxy/2u8JACI6bBeCaamYijrU8jyhZGADPr2Px0MCGuWdzkubPwhW4T7PO40anM6ciozTRaelmP_1jIn9i9Qme59kqnm2Dg0-M2eEmtv9D7DBBxl3tSRX6hZCywdQgkdN9ZJSoYMxcg1AiWXCqhYY0TOTCgInHUd3');
+            background-size: cover;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .difficulty-button {
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 20px;
+            transition: transform .2s;
+            width: calc(100% / 3 - 20px);
+        }
+        .difficulty-button:hover {
+            transform: scale(1.1);
+        }
+        .container {
+            text-align: center;
+            color: white;
+        }
+        h1 {
+            font-size: 4em;
+            margin-bottom: 50px;
+        }
+        #easy {
+            background-color: lightgreen;
+        }
+        #medium {
+            background-color: lightblue;
+        }
+        #hard {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select Difficulty Level</h1>
+        <div>
+           <a href="easy.html" button type="button" class="btn difficulty-button" id="easy">Easy</button></a>
+           <a href="medium.html" button type="button" class="btn difficulty-button" id="medium">Medium</button></a>
+           <a href="hard.html" button type="button" class="btn difficulty-button" id="hard">Hard</button></a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('easy').addEventListener('click', () => {
+            fetchQuestions('easy', 'easy.html');
+        });
+
+        document.getElementById('medium').addEventListener('click', () => {
+            fetchQuestions('medium', 'medium.html');
+        });
+
+        document.getElementById('hard').addEventListener('click', () => {
+            fetchQuestions('hard', 'hard.html');
+        });
+
+        async function fetchQuestions(difficulty, redirectUrl) {
+            try {
+                const response = await fetch(`/questions?difficulty=${difficulty}`);
+                const questions = await response.json();
+                localStorage.setItem('questions', JSON.stringify(questions));
+                window.location.href = redirectUrl;
+            } catch (error) {
+                console.error('Error fetching questions:', error);
+            }
+        }
+    </script>
+</body>
+</html>
