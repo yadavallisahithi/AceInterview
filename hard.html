@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hard Coding Problems</title>
+  <style>
+    h3.question {
+      font-family: "Roboto", sans-serif;
+      font-size: 24px;
+      text-align: center;
+      font-weight: 100;
+    }
+
+    .editor-container {
+      width: 900px;
+      height: 540px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    #editor {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 50px;
+      height: calc(100% - 50px);
+      width: 100%;
+      font-size: 20px;
+    }
+
+    .submit-button {
+      position: absolute;
+      bottom: 0;
+      width: 100px;
+      height: 40px;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .error-container {
+      position: absolute;
+      bottom: 0;
+      left: 110px;
+      right: 0;
+      height: 40px;
+      padding: 10px;
+      font-size: 16px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h3 class="question" id="question-title">Loading...</h3>
+  <p id="question-prompt"></p>
+
+  <div class="editor-container">
+    <div id="editor">// Write your code here</div>
+  </div>
+
+  <button class="submit-button" onclick="checkAnswer()">Submit</button>
+
+  <div class="error-container" id="error-container"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.5.3/ace.js"></script>
+  <script>
+    // Predefined list of hard questions with expected answers
+    const questions = [
+      {
+        title: "Implement a Priority Queue",
+        prompt: "Implement a Priority Queue data structure in JavaScript.",
+        expectedAnswer: "class PriorityQueue {\n  constructor() {\n    this.items = [];\n  }\n  enqueue(element, priority) {\n    const queueElement = { element, priority };\n    let added = false;\n    for (let i = 0; i < this.items.length; i++) {\n      if (queueElement.priority < this.items[i].priority) {\n        this.items.splice(i, 0, queueElement);\n        added = true;\n        break;\n      }\n    }\n    if (!added) {\n      this.items.push(queueElement);\n    }\n  }\n  // Other methods...\n}\n\nconst pq = new PriorityQueue();\npq.enqueue('A', 2);\npq.enqueue('B', 1);\nconsole.log(pq.items);"
+      },
+      {
+        title: "Implement a Trie",
+        prompt: "Implement a Trie data structure in JavaScript.",
+        expectedAnswer: "// TrieNode class\nclass TrieNode {\n  constructor() {\n    this.children = new Map();\n    this.isEndOfWord = false;\n  }\n}\n\n// Trie class\nclass Trie {\n  constructor() {\n    this.root = new TrieNode();\n  }\n  // Methods for insertion, deletion, searching, etc...\n}\n\nconst trie = new Trie();"
+      },
+      {
+        title: "Implement Dijkstra's Algorithm",
+        prompt: "Implement Dijkstra's Algorithm in JavaScript for finding the shortest path in a weighted graph.",
+        expectedAnswer: "// Function to find the shortest path using Dijkstra's Algorithm\nfunction dijkstra(graph, start) {\n  // Implementation...\n}\n\n// Example usage:\nconst graph = {\n  A: { B: 4, C: 2 },\n  B: { A: 4, C: 5, D: 10 },\n  C: { A: 2, B: 5, D: 3 },\n  D: { B: 10, C: 3 }\n};\nconsole.log(dijkstra(graph, 'A'));"
+      }
+      // Add more questions as needed
+    ];
+
+    let currentQuestion = {};
+
+    // Function to fetch a random question from the predefined list
+    function fetchRandomQuestion() {
+      const randomIndex = Math.floor(Math.random() * questions.length);
+      return questions[randomIndex];
+    }
+
+    // Fetch and display a random question when the page loads
+    document.addEventListener('DOMContentLoaded', (event) => {
+      currentQuestion = fetchRandomQuestion();
+      document.getElementById('question-title').innerText = currentQuestion.title;
+      document.getElementById('question-prompt').innerText = currentQuestion.prompt;
+    });
+
+    // Initialize the Ace editor
+    let editor = ace.edit("editor", {
+      theme: "ace/theme/cobalt",
+      mode: "ace/mode/javascript",
+    });
+
+    function checkAnswer() {
+      let editorContent = editor.getValue();
+      if (editorContent.trim() === currentQuestion.expectedAnswer.trim()) {
+        document.getElementById("error-container").innerText = "Congratulations! Your answer is correct.";
+      } else {
+        document.getElementById("error-container").innerText = "Sorry, your answer is incorrect. Please review your code.";
+      }
+    }
+  </script>
+</body>
+</html>
