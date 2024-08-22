@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    h3.question {
+      font-family: "Roboto", sans-serif;
+      font-size: 24px;
+      text-align: center;
+      font-weight: 100;
+    }
+
+    .editor-container {
+      width: 900px;
+      height: 540px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    #editor {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 50px;
+      height: calc(100% - 50px);
+      width: 100%;
+      font-size: 20px;
+    }
+
+    .submit-button {
+      position: absolute;
+      bottom: 0;
+      width: 100px;
+      height: 40px;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .error-container {
+      position: absolute;
+      bottom: 0;
+      left: 110px;
+      right: 0;
+      height: 40px;
+      padding: 10px;
+      font-size: 16px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h3 class="question" id="question-title">Loading...</h3>
+  <p id="question-prompt"></p>
+
+  <div class="editor-container">
+    <div id="editor">// Write your code here</div>
+  </div>
+
+  <button class="submit-button" onclick="checkAnswer()">Submit</button>
+
+  <div class="error-container" id="error-container"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.5.3/ace.js"></script>
+  <script>
+    // Predefined list of questions with expected answers
+    const questions = [
+      {
+        title: "Sum of Two Numbers",
+        prompt: "Write a function that takes two numbers as arguments and returns their sum.",
+        expectedAnswer: "function sum(a, b) {\n  return a + b;\n}"
+      },
+      {
+        title: "Reverse a String",
+        prompt: "Write a program to reverse a string in JavaScript.",
+        expectedAnswer: "function reverseString(str) {\n  return str.split('').reverse().join('');\n}\n\nconsole.log(reverseString('hello'));"
+      },
+      {
+        title: "Palindrome Checker",
+        prompt: "Write a function to check if a given string is a palindrome.",
+        expectedAnswer: "function isPalindrome(str) {\n  const reversed = str.split('').reverse().join('');\n  return str === reversed;\n}\n\nconsole.log(isPalindrome('racecar'));"
+      }
+      // Add more questions as needed
+    ];
+
+    let currentQuestion = {};
+
+    // Function to fetch a random question from the predefined list
+    function fetchRandomQuestion() {
+      const randomIndex = Math.floor(Math.random() * questions.length);
+      return questions[randomIndex];
+    }
+
+    // Fetch and display a random question when the page loads
+    document.addEventListener('DOMContentLoaded', (event) => {
+      currentQuestion = fetchRandomQuestion();
+      document.getElementById('question-title').innerText = currentQuestion.title;
+      document.getElementById('question-prompt').innerText = currentQuestion.prompt;
+    });
+
+    // Initialize the Ace editor
+    let editor = ace.edit("editor", {
+      theme: "ace/theme/cobalt",
+      mode: "ace/mode/javascript",
+    });
+
+    function checkAnswer() {
+      let editorContent = editor.getValue();
+      if (editorContent.trim() === currentQuestion.expectedAnswer.trim()) {
+        document.getElementById("error-container").innerText = "Congratulations! Your answer is correct.";
+      } else {
+        document.getElementById("error-container").innerText = "Sorry, your answer is incorrect. Please review your code.";
+      }
+    }
+  </script>
+</body>
+</html>
