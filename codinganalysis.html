@@ -1,0 +1,142 @@
+coding round analysis : <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coding Round Analysis</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #90EE90; /* Light Green */
+      color: white;
+    }
+    .popover-content {
+      background-color: #f9f9f9;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      max-width: 300px;
+    }
+    .popover-header {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px 5px 0 0;
+    }
+    .popover-body {
+      padding: 0;
+    }
+    .chart-container {
+      position: relative;
+      height: 300px;
+    }
+    .chart-container canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .level-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .level-block.easy {
+      background-color: #00008B; /* Dark Blue */
+    }
+    .level-block.medium {
+      background-color: #8B0000; /* Dark Red */
+    }
+    .level-block.hard {
+      background-color: #006400; /* Dark Green */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="display-4">Coding Round Analysis</h1>
+    <p class="lead">Number of Questions Solved</p>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="level-block easy" data-toggle="popover" data-placement="right" data-content="Easy: 10 minutes">
+          <h3>Easy</h3>
+        </div>
+        <div class="level-block medium" data-toggle="popover" data-placement="right" data-content="Medium: 20 minutes">
+          <h3>Medium</h3>
+        </div>
+        <div class="level-block hard" data-toggle="popover" data-placement="right" data-content="Hard: 30 minutes">
+          <h3>Hard</h3>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="chart-container">
+          <canvas id="levels-pie"></canvas>
+        </div>
+      </div>
+    </div>
+
+   
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      var ctx = document.getElementById('levels-pie').getContext('2d');
+      var levelsPie = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Easy', 'Medium', 'Hard'],
+          datasets: [{
+            data: [10, 20, 30],
+            backgroundColor: ['#00008B', '#8B0000', '#006400'],
+            borderColor: ['#000060', '#600000', '#004000'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      });
+
+    
+      var scores = [10, 20, 30];
+      var suggestions = [];
+
+      if (scores[0] < scores[1] && scores[0] < scores[2]) {
+        suggestions.push("Easy level questions.");
+      }
+      if (scores[1] < scores[0] && scores[1] < scores[2]) {
+        suggestions.push("Medium level questions.");
+      }
+      if (scores[2] < scores[0] && scores[2] < scores[1]) {
+        suggestions.push("Hard level questions.");
+      }
+
+      // Display suggestions
+      var suggestionList = document.getElementById('suggestion-list');
+      suggestions.forEach(function(suggestion) {
+        var li = document.createElement('li');
+        li.textContent = suggestion;
+        suggestionList.appendChild(li);
+      });
+    </script>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('[data-toggle="popover"]').popover({html: true, trigger: 'hover'});
+    });
+  </script>
+</body>
+</html>
